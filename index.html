@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Painting Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background: radial-gradient(circle at top, #1f2933 0%, #050609 55%, #000 100%);
+      color: #f5f5f5;
+    }
+
+    /* Header */
+    header {
+      background: rgba(0, 0, 0, 0.9);
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    nav a {
+      color: #f5f5f5;
+      margin-left: 12px;
+      text-decoration: none;
+      font-size: 14px;
+      position: relative;
+    }
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #ff9800, #ff5722);
+      transition: width 0.25s;
+    }
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 18px;
+    }
+
+    /* Hero / Home */
+    #home {
+      min-height: 70vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 26px;
+      align-items: center;
+    }
+    @media (max-width: 780px) {
+      #home {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+    }
+
+    .hero-text h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    .hero-text h2 span {
+      background: linear-gradient(90deg, #ff9800, #ff5722);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .hero-text p {
+      margin-bottom: 18px;
+      line-height: 1.6;
+      color: #d7dde5;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+      justify-content: flex-start;
+    }
+    @media (max-width: 780px) {
+      .hero-tags {
+        justify-content: center;
+      }
+    }
+    .hero-tag {
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 4px 10px;
+      font-size: 11px;
+      background: rgba(0,0,0,0.35);
+    }
+
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-start;
+    }
+    @media (max-width: 780px) {
+      .btn-row {
+        justify-content: center;
+      }
+    }
+
+    .btn-main {
+      display: inline-block;
+      padding: 10px 22px;
+      background: linear-gradient(135deg, #ff9800, #ff5722);
+      color: #000;
+      text-decoration: none;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+      transform: translateY(0);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 34px rgba(0,0,0,0.7);
+    }
+    .btn-ghost {
+      display: inline-block;
+      padding: 9px 20px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #f5f5f5;
+      text-decoration: none;
+      font-size: 13px;
+      background: rgba(0,0,0,0.3);
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,0.06);
+      border-color: #ff9800;
+    }
+
+    .hero-image {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.09);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+    }
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1.02);
+      transition: transform 0.6s ease-out;
+    }
+    .hero-image:hover img {
+      transform: scale(1.06);
+    }
+    .hero-tag-box {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      background: rgba(0,0,0,0.7);
+      padding: 8px 11px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 11px;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Section titles */
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .section-sub {
+      font-size: 13px;
+      color: #b0bac7;
+      margin-bottom: 18px;
+    }
+
+    /* About */
+    #about p {
+      line-height: 1.7;
+      color: #d7dde5;
+      margin-bottom: 12px;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 780px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .about-card {
+      background: rgba(0,0,0,0.45);
+      border-radius: 14px;
+      padding: 14px 14px 12px;
+      border: 1px solid rgba(255,255,255,0.09);
+      font-size: 13px;
+      color: #d7dde5;
+    }
+    .about-card h3 {
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #ffcc80;
+    }
+    .about-list {
+      list-style: none;
+      margin-top: 4px;
+    }
+    .about-list li {
+      margin-bottom: 4px;
+    }
+
+    /* Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .gallery-item {
+      background: radial-gradient(circle at top, #1f2933 0%, #050609 50%, #000 100%);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.13);
+      position: relative;
+      transform: translateY(0);
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+      cursor: pointer;
+    }
+    .gallery-item img {
+      width: 100%;
+      display: block;
+      height: 150px;
+      object-fit: cover;
+      transition: transform 0.4s ease-out, opacity 0.4s;
+    }
+    .gallery-item-content {
+      padding: 9px 10px 10px;
+    }
+    .gallery-item-content h4 {
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+    .gallery-item-content p {
+      font-size: 11px;
+      color: #b0bac7;
+    }
+    .chip {
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      padding: 3px 8px;
+      font-size: 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(255,255,255,0.28);
+    }
+    .gallery-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.8);
+      border-color: #ff9800;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      opacity: 0.96;
+    }
+
+    /* Contact */
+    #contact p {
+      margin-bottom: 8px;
+      color: #d7dde5;
+      font-size: 14px;
+    }
+    a.link {
+      color: #ffcc80;
+      text-decoration: none;
+    }
+    a.link:hover {
+      text-decoration: underline;
+    }
+
+    .contact-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .contact-tag {
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 6px 12px;
+      font-size: 12px;
+      background: rgba(0,0,0,0.45);
+    }
+
+    footer {
+      text-align: center;
+      padding: 16px;
+      background: #000;
+      font-size: 12px;
+      color: #8b93a5;
+      margin-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    /* Simple scroll animations */
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>My Name • Kumar</h1>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#about">About</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HOME / HERO -->
+<section id="home" class="reveal visible">
+  <div class="hero-text">
+    <h2>Creating <span>stories</span> with color and light</h2>
+    <p>
+      Welcome to my online painting portfolio. Explore atmospheric halls, detailed statues,
+      and unique abstract pieces inspired by everyday life.
+    </p>
+
+    <div class="hero-tags">
+      <div class="hero-tag">Acrylic & Oil Paintings</div>
+      <div class="hero-tag">Portraits & Statues</div>
+      <div class="hero-tag">Custom Commissions</div>
+      <div class="hero-tag">Gallery & Exhibition Art</div>
+    </div>
+
+    <div class="btn-row">
+      <a href="#gallery" class="btn-main">View My Artwork</a>
+      <a href="#contact" class="btn-ghost">Book a Painting</a>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <!-- Example painting hall image (replace later with your own) -->
+    <img src="https://images.pexels.com/photos/208636/pexels-photo-208636.jpeg?auto=compress&cs=tinysrgb&w=800"
+         alt="Painting exhibition hall">
+    <div class="hero-tag-box">
+      Painting Hall • Warm lights • Quiet space
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="reveal">
+  <h2 class="section-title">About Me</h2>
+  <p class="section-sub">Painter focused on expressive halls, pictures, and imaginative scenes.</p>
+
+  <div class="about-grid">
+    <div>
+      <p>
+        I am a painter based in Maharashtra who enjoys turning simple moments into visual stories.
+        My work moves between warm gallery halls, detailed pictures art, and colorful abstract
+        paintings that feel alive.
+      </p>
+      <p>
+        I experiment with acrylic, oil, watercolor, and digital tools to create textures
+        that feel both modern and timeless. Each piece is built slowly, layer by layer.
+      </p>
+    </div>
+
+    <div>
+      <div class="about-card">
+        <h3>Styles & Themes</h3>
+        <ul class="about-list">
+          <li>• Painting halls and exhibition scenes</li>
+          <li>• Human figures and statue-inspired portraits</li>
+          <li>• Unique abstract color compositions</li>
+        </ul>
+      </div>
+      <div class="about-card" style="margin-top:10px;">
+        <h3>Available For</h3>
+        <ul class="about-list">
+          <li>• Custom wall paintings for homes/cafes</li>
+          <li>• Portrait commissions from photos</li>
+          <li>• Event and exhibition artwork</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="reveal">
+  <h2 class="section-title">Gallery</h2>
+  <p class="section-sub">A mix of painting halls, statues, and unique abstract pieces.</p>
+
+  <div class="gallery-grid">
+    <!-- Hall painting -->
+    <div class="gallery-item">
+      <span class="chip">Painting Hall</span>
+      <img src="https://images.pexels.com/photos/208636/pexels-photo-208636.jpeg?auto=compress&cs=tinysrgb&w=800"
+           alt="Art gallery hall">
+      <div class="gallery-item-content">
+        <h4>Golden Light Gallery</h4>
+        <p>Warm corridor of paintings with soft lighting.</p>
+      </div>
+    </div>
+
+    <!-- Statue close-up -->
+    <div class="gallery-item">
+      <span class="chip">Statue</span>
+      <img src="https://images.pexels.com/photos/674010/pexels-photo-674010.jpeg?auto=compress&cs=tinysrgb&w=800"
+           alt="Artistic statue">
+      <div class="gallery-item-content">
+        <h4>Quiet Stone</h4>
+        <p>Inspired by classic sculptures and calm poses.</p>
+      </div>
+    </div>
+
+    <!-- Unique abstract -->
+    <div class="gallery-item">
+      <span class="chip">Abstract</span>
+      <img src="https://images.pexels.com/photos/2693200/pexels-photo-2693200.jpeg?auto=compress&cs=tinysrgb&w=800"
+           alt="Abstract painting">
+      <div class="gallery-item-content">
+        <h4>City of Color</h4>
+        <p>Layers of color suggesting a modern city at night.</p>
+      </div>
+    </div>
+
+    <!-- Another hall / frame wall -->
+    <div class="gallery-item">
+      <span class="chip">Frames</span>
+      <img src="https://images.pexels.com/photos/1293126/pexels-photo-1293126.jpeg?auto=compress&cs=tinysrgb&w=800"
+           alt="Wall of frames">
+      <div class="gallery-item-content">
+        <h4>Memory Wall</h4>
+        <p>A wall full of frames, each holding a different story.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="reveal">
+  <h2 class="section-title">Contact</h2>
+  <p class="section-sub">Interested in a custom painting or collaboration? Reach out.</p>
+
+  <p>Email: <a href="mailto: nandkumarfirange@gmail.com" class="link">nandkumarfirange@gmail.com</a></p>
+  <p>Phone: <a href="tel:+919604281558" class="link">+91 9604281558</a></p>
+  <p>Instagram: <a href="https://instagram.com/yourprofile" class="link" target="_blank">@namdkumarfirange</a></p>
+  <p>WhatsApp: <a href="https://wa.me/919604281558" class="link" target="_blank">Chat on WhatsApp</a></p>
+
+  <div class="contact-row">
+    <div class="contact-tag">🎨 Custom canvas paintings</div>
+    <div class="contact-tag">🖼 Gallery & cafe walls</div>
+    <div class="contact-tag">📷 Portraits from your photos</div>
+  </div>
+</section>
+
+<footer>
+  © 2025 My Painting Portfolio • All rights reserved.
+</footer>
+
+<script>
+  // Simple scroll reveal effect
+  const reveals = document.querySelectorAll('.reveal');
+
+  function handleScroll() {
+    const triggerBottom = window.innerHeight * 0.85;
+
+    reveals.forEach(el => {
+      const boxTop = el.getBoundingClientRect().top;
+      if (boxTop < triggerBottom) {
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', handleScroll);
+  // Run once on load
+  handleScroll();
+</script>
+
+</body>
+</html>
